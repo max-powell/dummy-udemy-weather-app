@@ -1,6 +1,7 @@
 const request = require('request')
 
 const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
 const darkskyUrl = 'https://api.darksky.net/forecast/5fb197eebdeaf31dd8b2052e84c742c9/37.8267,-122.4233?units=si'
 
@@ -18,4 +19,13 @@ const darkskyUrl = 'https://api.darksky.net/forecast/5fb197eebdeaf31dd8b2052e84c
 geocode('kt22 0dj', (err, data) => {
   console.log('Error: ', err)
   console.log('Data: ', data)
+  forecast(data, (err, data) => {
+    console.log('Error: ', err)
+    console.log('Data: ', data)
+  })
 })
+
+// forecast({latitude: '-0.334589390286598',longitude: '51.3203636760616'}, (err, data) => {
+//   console.log('Error: ', err)
+//   console.log('Data: ', data)
+// })
