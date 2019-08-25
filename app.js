@@ -3,29 +3,20 @@ const request = require('request')
 const geocode = require('./utils/geocode')
 const forecast = require('./utils/forecast')
 
-const darkskyUrl = 'https://api.darksky.net/forecast/5fb197eebdeaf31dd8b2052e84c742c9/37.8267,-122.4233?units=si'
+if (process.argv.length === 3) {
+  geocode(process.argv[2], (err, geoData) => {
+    if (err) {
+      return console.log(err)
+    }
+    forecast(geoData, (err, forecastData) => {
+      if (err) {
+        return console.log(err)
+      }
 
-// request({url: darkskyUrl, json: true}, (err, {body}) => {
-//   if (err) {
-//     console.log('Unable to connect to weather service')
-//   } else if (body.error) {
-//     log(body.error)
-//   } else {
-//     console.log(body.daily.data[0].summary)
-//     console.log(`It is currently ${body.currently.temperature} degrees out. There is a ${body.currently.precipProbability * 100}% chance of rain.`);
-//   }
-// })
-
-geocode('kt22 0dj', (err, data) => {
-  console.log('Error: ', err)
-  console.log('Data: ', data)
-  forecast(data, (err, data) => {
-    console.log('Error: ', err)
-    console.log('Data: ', data)
+      console.log(geoData.location)
+      console.log(forecastData)
+    })
   })
-})
-
-// forecast({latitude: '-0.334589390286598',longitude: '51.3203636760616'}, (err, data) => {
-//   console.log('Error: ', err)
-//   console.log('Data: ', data)
-// })
+} else {
+  console.log('Wrong number of arguments. Expected 1 argument.')
+}
